@@ -673,36 +673,51 @@
   </main>
 
   <script>
-    // ====== FAQ accordion ======
-    document.querySelectorAll(".faqItem .faqQ").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const item = btn.closest(".faqItem");
-        const open = item.classList.contains("open");
-        document.querySelectorAll(".faqItem.open").forEach((it) => it.classList.remove("open"));
-        if (!open) item.classList.add("open");
-      });
+  // ====== FAQ accordion ======
+  document.querySelectorAll(".faqItem .faqQ").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".faqItem");
+      const open = item.classList.contains("open");
+      document.querySelectorAll(".faqItem.open").forEach((it) => it.classList.remove("open"));
+      if (!open) item.classList.add("open");
     });
+  });
 
-    // ====== Google Form CTA wiring ======
-    function openForm() {
-      window.open(FORM_URL, "_blank", "noopener");
-    }
+  // ====== CTA routing ======
+  const MBTI_URL = "https://majormbtitest.netlify.app"; // ✅ 네 MBTI 테스트 주소로 변경
 
-    const ids = [
-      "btnRecoTop","btnApplyTop",
-      "btnApplyHero","btnRecoHero",
-      "btnApplyCta","btnRecoCta",
-      "btnApplyFooter"
-    ];
+  function openForm() {
+    window.open(FORM_URL, "_blank", "noopener");
+  }
 
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.addEventListener("click", (e) => {
-        e.preventDefault();
-        openForm();
-      });
+  function openMbti() {
+    window.open(MBTI_URL, "_blank", "noopener");
+  }
+
+  // ✅ 체험 신청(구글폼) 버튼들
+  const APPLY_IDS = ["btnApplyTop", "btnApplyHero", "btnApplyCta", "btnApplyFooter"];
+
+  // ✅ 학과 추천(MBTI) 버튼들
+  const RECO_IDS = ["btnRecoTop", "btnRecoHero", "btnRecoCta"];
+
+  APPLY_IDS.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      openForm();
     });
-  </script>
+  });
+
+  RECO_IDS.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      openMbti();
+    });
+  });
+</script>
 </body>
 </html>
+
