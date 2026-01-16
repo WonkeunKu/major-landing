@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>전공을 입학 전에 체험하세요 | 학과 체험 플랫폼</title>
+  <meta name="description" content="수업·과제 기반으로 전공을 미리 경험하고, 학과별 난이도·과제량·팀플·적합도를 비교해보세요. 정가 30만원 → 할인가 15만원." />
+
+  <!-- Google Form URL (단일 관리) -->
+  <script>
+    const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfZKqw6d-evU8WFqyNV7TZ6rk46faFrDj9OuzhdzMwwrSRP_w/viewform?usp=publish-editor";
+  </script>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#0f1733;
+      --text:#eaf0ff;
+      --muted:#b9c4e6;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1120px;
+      --pad: clamp(18px, 3vw, 28px);
+      --btn: linear-gradient(135deg, rgba(122,160,255,1), rgba(102,255,208,1));
+      --btn2: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      --focus: 0 0 0 3px rgba(122,160,255,.35);
+      --ok: rgba(102,255,208,1);
+      --warn: rgba(255,170,120,1);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", Roboto, Arial, sans-serif;
+      color:var(--text);
+      line-height:1.55;
+      overflow-x:hidden;
+
+      /* ✅ 자연스러운 전체 톤 흐름 */
+      background: linear-gradient(
+        180deg,
+        #070b17 0%,
+        #0b1020 35%,
+        #0a1329 70%,
+        #070b17 100%
+      );
+    }
+
+    /* ✅ 급격한 띠(밴딩) 방지 오버레이 */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(1200px 800px at 18% 10%, rgba(122,160,255,.18), transparent 65%),
+        radial-gradient(1100px 760px at 85% 18%, rgba(102,255,208,.12), transparent 68%),
+        radial-gradient(1400px 900px at 55% 100%, rgba(255,170,120,.10), transparent 70%);
+      filter: blur(6px);
+      transform: translateZ(0);
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding: 0 var(--pad);}
+
+    /* NAV */
+    .nav{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(14px);
+      background: rgba(11,16,32,.55);
+      border-bottom:1px solid var(--line);
+    }
+    .navin{display:flex; align-items:center; justify-content:space-between; padding:14px 0;}
+    .brand{
+      display:flex; gap:10px; align-items:center; font-weight:800; letter-spacing:-.4px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background: var(--btn);
+      box-shadow: 0 10px 30px rgba(122,160,255,.22);
+    }
+    .navlinks{display:flex; gap:18px; align-items:center; color:var(--muted); font-weight:600}
+    .navlinks a{opacity:.9}
+    .navlinks a:hover{opacity:1; color:var(--text)}
+    .navcta{display:flex; gap:10px; align-items:center}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight:800;
+      border:1px solid transparent;
+      cursor:pointer;
+      transition: transform .08s ease, opacity .2s ease, box-shadow .2s ease, border-color .2s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: var(--btn);
+      color:#061027;
+      box-shadow: 0 16px 40px rgba(122,160,255,.20);
+    }
+    .btn.ghost{
+      background: var(--btn2);
+      border-color: rgba(255,255,255,.14);
+      color: var(--text);
+    }
+    .btn:hover{opacity:.95}
+
+    /* HERO */
+    .hero{padding: 56px 0 26px}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items:stretch;
+    }
+    .chipRow{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px}
+    .chip{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+      font-weight:700;
+      font-size:13px;
+    }
+    .chip i{
+      width:8px; height:8px; border-radius: 999px; background: var(--ok); display:inline-block;
+      box-shadow: 0 0 0 3px rgba(102,255,208,.14);
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(34px, 4vw, 54px);
+      line-height:1.05;
+      letter-spacing:-1.1px;
+    }
+    .sub{
+      margin: 14px 0 18px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.4vw, 18px);
+      max-width: 60ch;
+    }
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin: 16px 0 10px}
+    .note{
+      margin-top:10px;
+      color: rgba(234,240,255,.78);
+      font-size: 13px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .note span{
+      padding:6px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      color: rgba(234,240,255,.78);
+    }
+
+    .card{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+    }
+    .heroCard{padding: 18px;}
+    .panelTitle{font-weight:900; font-size:16px; letter-spacing:-.3px}
+    .panelText{margin:8px 0 0; color: var(--muted); font-weight:600}
+
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .stat{
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .stat .k{color: var(--muted); font-weight:800; font-size:12px; letter-spacing:.2px}
+    .stat .v{font-size:22px; font-weight:900; letter-spacing:-.6px; margin-top:4px}
+    .stat .d{color: rgba(234,240,255,.75); font-size:12px; margin-top:4px}
+
+    /* SECTION */
+    .section{padding: 42px 0;}
+    .section h2{
+      margin:0 0 12px;
+      font-size: clamp(22px, 2.2vw, 30px);
+      letter-spacing:-.6px;
+    }
+    .section p.lead{
+      margin:0 0 18px;
+      color: var(--muted);
+      max-width: 76ch;
+    }
+
+    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap: 18px;}
+    .grid3{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px;}
+    .grid4{display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px;}
+
+    .panel{padding: 18px;}
+    .bullets{
+      margin:0; padding-left: 18px; color: var(--muted); font-weight:650;
+    }
+    .bullets li{margin:8px 0}
+
+    .divider{height:1px; background: var(--line); margin: 10px 0 0;}
+
+    /* STEPS */
+    .steps{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px;}
+    .step{
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .stepNum{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:34px; height:34px;
+      border-radius: 12px;
+      background: rgba(122,160,255,.22);
+      border:1px solid rgba(122,160,255,.30);
+      font-weight:900;
+      margin-bottom:10px;
+    }
+    .stepTitle{font-weight:900; letter-spacing:-.2px}
+    .stepText{color: var(--muted); margin:8px 0 0; font-weight:650}
+
+    /* CTA BLOCK */
+    .ctaBlock{
+      padding: 22px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 16px;
+      align-items:stretch;
+    }
+    .ctaBlock h3{
+      margin:0 0 10px;
+      font-size: clamp(18px, 2vw, 24px);
+      letter-spacing:-.5px;
+    }
+    .small{color: var(--muted); font-weight:650; margin:0}
+
+    .priceLine{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:baseline;
+      margin-top: 10px;
+    }
+    .priceOld{
+      color: rgba(234,240,255,.65);
+      text-decoration: line-through;
+      font-weight:800;
+    }
+    .priceNew{
+      font-weight:950;
+      letter-spacing:-.4px;
+    }
+    .badgeSale{
+      font-size:12px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius: 999px;
+      background: rgba(255,170,120,.12);
+      border:1px solid rgba(255,170,120,.26);
+      color: rgba(234,240,255,.9);
+    }
+
+    /* FAQ */
+    .faq{display:grid; gap:10px; margin-top: 14px;}
+    .faqItem{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
+    }
+    .faqQ{
+      width:100%;
+      text-align:left;
+      padding: 14px 14px;
+      background: transparent;
+      border:0;
+      color: var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      cursor:pointer;
+      font-weight:900;
+      letter-spacing:-.2px;
+    }
+    .chev{
+      width: 28px; height: 28px; border-radius: 10px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      transition: transform .2s ease;
+      flex: 0 0 auto;
+    }
+    .faqA{
+      max-height: 0;
+      overflow:hidden;
+      transition: max-height .25s ease;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .faqA p{
+      margin:0;
+      padding: 12px 14px 14px;
+      color: var(--muted);
+      font-weight:650;
+    }
+    .faqItem.open .faqA{max-height: 260px}
+    .faqItem.open .chev{transform: rotate(180deg)}
+
+    /* FOOTER */
+    .footer{
+      padding: 28px 0 46px;
+      color: rgba(234,240,255,.62);
+      font-size: 12px;
+      border-top: 1px solid var(--line);
+      margin-top: 26px;
+    }
+    .footGrid{display:flex; justify-content:space-between; gap: 14px; flex-wrap:wrap}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+    /* responsive */
+    @media (max-width: 960px){
+      .heroGrid{grid-template-columns: 1fr; }
+      .ctaBlock{grid-template-columns: 1fr; }
+      .grid3{grid-template-columns: 1fr; }
+      .grid4{grid-template-columns: 1fr 1fr; }
+      .steps{grid-template-columns: 1fr; }
+      .navlinks{display:none}
+    }
+    @media (max-width: 520px){
+      .grid4{grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap">
+      <div class="navin">
+        <a class="brand" href="#top" aria-label="홈으로">
+          <span class="logo" aria-hidden="true"></span>
+          <span>학과 체험 플랫폼</span>
+        </a>
+
+        <nav class="navlinks" aria-label="페이지 섹션">
+          <a href="#features">기능</a>
+          <a href="#forwho">추천 대상</a>
+          <a href="#how">사용 방법</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <div class="navcta">
+          <a class="btn ghost" id="btnRecoTop" href="#">3분 추천 받기</a>
+          <a class="btn primary" id="btnApplyTop" href="#">체험 신청</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="top" class="wrap">
+    <section class="hero">
+      <div class="heroGrid">
+        <div>
+          <div class="chipRow">
+            <span class="chip"><i></i> 수업·과제 기반 시뮬레이션</span>
+            <span class="chip"><i></i> 대학생 현실 데이터</span>
+            <span class="chip"><i></i> 학과 비교 리포트</span>
+          </div>
+
+          <h1>전공, 입학 전에<br/>먼저 체험하세요.</h1>
+          <p class="sub">
+            “감”으로 학과를 고르는 대신, 1학년 1학기 흐름을 미리 경험하고
+            난이도·과제량·팀플·적합도를 비교해 <b>후회 확률</b>을 줄이세요.
+          </p>
+
+          <div class="ctaRow">
+            <a class="btn primary" id="btnApplyHero" href="#">체험 신청하기</a>
+            <a class="btn ghost" id="btnRecoHero" href="#">학과 추천 받아보기 (3분)</a>
+          </div>
+
+          <div class="note" aria-label="신뢰 요소">
+            <span>과제/프로젝트 미니 체험</span>
+            <span>학년별 로드맵</span>
+            <span>부모/선생님 공유 PDF</span>
+          </div>
+        </div>
+
+        <aside class="card heroCard" aria-label="요약 카드">
+          <div class="panelTitle">한 번에 보는 핵심</div>
+          <p class="panelText">
+            전공을 “체험 → 비교 → 리포트”로 결정하게 만드는 원페이지 솔루션.
+          </p>
+
+          <div class="stats" role="list">
+            <div class="stat" role="listitem">
+              <div class="k">체험</div>
+              <div class="v">1주</div>
+              <div class="d">미니 과제/수업 흐름</div>
+            </div>
+            <div class="stat" role="listitem">
+              <div class="k">추천</div>
+              <div class="v">3분</div>
+              <div class="d">관심/비선호 기반</div>
+            </div>
+            <div class="stat" role="listitem">
+              <div class="k">비교</div>
+              <div class="v">표 1장</div>
+              <div class="d">난이도·팀플·코딩</div>
+            </div>
+            <div class="stat" role="listitem">
+              <div class="k">리포트</div>
+              <div class="v">PDF</div>
+              <div class="d">공유/상담에 바로 사용</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- ✅ 가격/할인 표시 (요약 카드에 자연스럽게 추가) -->
+          <div class="panelText" style="margin-top:12px;">
+            <div class="panelTitle" style="font-size:14px;">프로그램 비용</div>
+            <div class="priceLine">
+              <span class="priceOld">정가 30만원</span>
+              <span class="badgeSale">런칭 한정</span>
+              <span class="priceNew">할인가 15만원</span>
+            </div>
+            <div style="margin-top:6px; color: rgba(234,240,255,.72); font-size:12px; font-weight:650;">
+              신청/접수는 구글폼으로 진행됩니다.
+            </div>
+          </div>
+
+          <div class="divider" style="margin-top:14px;"></div>
+          <p class="panelText" style="margin-top:12px;">
+            초기에는 핵심 학과부터 시작해, 검수된 데이터로 단계적으로 확장합니다.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="section" id="problem">
+      <h2>학과 이름은 아는데, 실제로 뭘 하는지 모르는 상태에서 선택하잖아요.</h2>
+      <p class="lead">이건 “의지 부족”이 아니라, <b>정보 구조가 잘못된 문제</b>예요.</p>
+
+      <div class="grid2">
+        <div class="card panel">
+          <div class="panelTitle">학생이 겪는 현실</div>
+          <ul class="bullets">
+            <li>홍보 영상은 멋있는데, 현실이랑 괴리가 큼</li>
+            <li>상담은 추상적이라 결정 근거가 부족</li>
+            <li>“취업 잘 됨”만 있고, 과정이 안 보임</li>
+            <li>결국 점수 맞춰 지원 → 뒤늦은 후회</li>
+          </ul>
+        </div>
+
+        <div class="card panel" style="background: rgba(122,160,255,.10); border-color: rgba(122,160,255,.22);">
+          <div class="panelTitle">우리가 만드는 해결 방식</div>
+          <p class="panelText">
+            전공을 “설명”이 아니라 “체험”으로 보여줍니다.
+            <br/><br/>
+            입학 전, 1학년 1학기부터 실제 과제·수업 흐름을 미리 경험하고
+            학과별 난이도/과제량/팀플/적합 포인트까지 비교해
+            <b>내가 버틸 수 있는 전공</b>을 고르게 합니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section" id="features">
+      <h2>핵심 기능</h2>
+      <p class="lead">MVP 기준으로도 “체험 깊이”가 생기면, 비교/추천은 자연스럽게 따라옵니다.</p>
+
+      <div class="grid4">
+        <div class="card panel">
+          <div class="panelTitle">1) 전공 시뮬레이션</div>
+          <p class="panelText">1학년 1학기 수업 흐름 + 미니 과제 체험</p>
+        </div>
+        <div class="card panel">
+          <div class="panelTitle">2) 현실 데이터</div>
+          <p class="panelText">과제량, 팀플, 시험 난이도, 만족도(대학생/졸업생)</p>
+        </div>
+        <div class="card panel">
+          <div class="panelTitle">3) 학과 비교</div>
+          <p class="panelText">“뭐가 다른지” 한 장 표로 명확히</p>
+        </div>
+        <div class="card panel">
+          <div class="panelTitle">4) 개인 리포트</div>
+          <p class="panelText">잘 맞는 점/힘든 점/추천 학과 TOP3 PDF</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOR WHO -->
+    <section class="section" id="forwho">
+      <h2>이런 학생에게 잘 맞아요</h2>
+      <p class="lead">타깃을 좁힐수록 전환율이 올라갑니다. (초기에는 고1~고2가 특히 좋아요)</p>
+
+      <div class="grid3">
+        <div class="card panel">
+          <div class="panelTitle">전공이 너무 많아 결정이 어려운 고1~고2</div>
+          <p class="panelText">탐색 단계에서 체험으로 후보를 줄입니다.</p>
+        </div>
+        <div class="card panel">
+          <div class="panelTitle">문과/이과 갈림길에 있는 학생</div>
+          <p class="panelText">과제/수업 기준으로 “맞는 활동”을 찾습니다.</p>
+        </div>
+        <div class="card panel">
+          <div class="panelTitle">부모/선생님께 설명 근거가 필요한 학생</div>
+          <p class="panelText">리포트(PDF)로 상담/면담이 쉬워집니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how">
+      <h2>사용 방법</h2>
+      <p class="lead">3단계로 끝. “추천 → 체험 → 비교 리포트” 흐름만 잡아도 런칭 가능합니다.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="stepNum">1</div>
+          <div class="stepTitle">관심 분야 선택 (30초)</div>
+          <p class="stepText">문과/이과/융합, 선호 활동과 싫어하는 작업을 입력</p>
+        </div>
+        <div class="step">
+          <div class="stepNum">2</div>
+          <div class="stepTitle">추천 학과 3개 → 1주 체험</div>
+          <p class="stepText">미니 과제/수업 흐름을 직접 해보며 “현실감” 확보</p>
+        </div>
+        <div class="step">
+          <div class="stepNum">3</div>
+          <div class="stepTitle">비교 리포트 저장/공유</div>
+          <p class="stepText">적합 포인트/주의 포인트 정리 → PDF로 공유</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA (FORM 제거, 구글폼 버튼만) -->
+    <section class="section" id="apply">
+      <div class="ctaBlock">
+        <div>
+          <h3>신청은 구글폼으로 진행됩니다. (정가 30만원 → 할인가 15만원)</h3>
+          <p class="small">
+            체험을 통해 “나에게 맞는 전공인지”를 미리 확인하고,
+            결과를 부모/선생님과 공유할 수 있는 리포트(PDF)까지 제공합니다.
+          </p>
+
+          <div class="divider" style="margin:16px 0;"></div>
+
+          <div class="panelTitle" style="font-size:14px;">가격 안내</div>
+          <div class="priceLine">
+            <span class="priceOld">정가 30만원</span>
+            <span class="badgeSale">런칭 한정</span>
+            <span class="priceNew">할인가 15만원</span>
+          </div>
+          <p class="small" style="margin-top:10px;">
+            신청서 제출 후 안내 메시지에 따라 진행됩니다.
+          </p>
+        </div>
+
+        <div class="card panel" style="background: rgba(0,0,0,.18); border-color: rgba(255,255,255,.10);">
+          <div class="panelTitle">바로 신청하기</div>
+          <p class="panelText">아래 버튼을 눌러 구글폼을 작성해 주세요.</p>
+
+          <div class="ctaRow" style="margin-top:14px;">
+            <a class="btn primary" id="btnApplyCta" href="#">체험 신청 (15만원)</a>
+            <a class="btn ghost" id="btnRecoCta" href="#">학과 추천 신청</a>
+          </div>
+
+          <p class="panelText" style="margin-top:12px; font-size:12px; color: rgba(234,240,255,.72);">
+            * 제출 후 자동 응답/안내를 확인해 주세요.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <h2>자주 묻는 질문</h2>
+      <p class="lead">운영하면서 가장 많이 나오는 질문 6개를 기본으로 넣었습니다.</p>
+
+      <div class="faq" role="list">
+        <div class="faqItem" role="listitem">
+          <button class="faqQ" type="button">
+            <span>Q. 진짜 과제가 나와요?</span>
+            <span class="chev" aria-hidden="true">⌄</span>
+          </button>
+          <div class="faqA">
+            <p>A. 실제 전공 과제/프로젝트를 “난이도 조절한 미니 버전”으로 제공합니다. 핵심은 완성도보다 ‘내가 이 과정을 즐기거나 버틸 수 있는지’ 확인하는 거예요.</p>
+          </div>
+        </div>
+
+        <div class="faqItem" role="listitem">
+          <button class="faqQ" type="button">
+            <span>Q. 고1도 할 수 있나요?</span>
+            <span class="chev" aria-hidden="true">⌄</span>
+          </button>
+          <div class="faqA">
+            <p>A. 네. 전공 기초 중심으로 설계해서 고1~고3 모두 가능합니다. 고1~고2는 탐색/비교에 특히 효과가 큽니다.</p>
+          </div>
+        </div>
+
+        <div class="faqItem" role="listitem">
+          <button class="faqQ" type="button">
+            <span>Q. 대학/학과 정보는 믿을 수 있나요?</span>
+            <span class="chev" aria-hidden="true">⌄</span>
+          </button>
+          <div class="faqA">
+            <p>A. 대학생/졸업생 인터뷰 + 자료 검수 프로세스로 업데이트합니다. “홍보용 문구”보다 “현실 로그”를 우선합니다.</p>
+          </div>
+        </div>
+
+        <div class="faqItem" role="listitem">
+          <button class="faqQ" type="button">
+            <span>Q. 어떤 학과가 있나요?</span>
+            <span class="chev" aria-hidden="true">⌄</span>
+          </button>
+          <div class="faqA">
+            <p>A. 초기에는 핵심 학과(공학/경영/간호 등)부터 깊게 시작하고, 데이터가 검증되는 순서로 확장합니다.</p>
+          </div>
+        </div>
+
+        <div class="faqItem" role="listitem">
+          <button class="faqQ" type="button">
+            <span>Q. 가격은 어떻게 되나요?</span>
+            <span class="chev" aria-hidden="true">⌄</span>
+          </button>
+          <div class="faqA">
+            <p>A. 프로그램은 <b>정가 30만원</b>이며, 현재는 <b>런칭 한정 할인가 15만원</b>으로 운영 중입니다.</p>
+          </div>
+        </div>
+
+        <div class="faqItem" role="listitem">
+          <button class="faqQ" type="button">
+            <span>Q. 부모/선생님과 공유할 수 있나요?</span>
+            <span class="chev" aria-hidden="true">⌄</span>
+          </button>
+          <div class="faqA">
+            <p>A. 네. 비교/체험 결과를 PDF로 저장해 상담·면담 때 그대로 공유할 수 있게 설계합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footGrid">
+        <div>
+          <div class="mono">© 학과 체험 플랫폼</div>
+          <div style="margin-top:6px;">문의: <span class="mono">hello@example.com</span> (원하는 주소로 변경)</div>
+        </div>
+        <div>
+          <a class="btn ghost" id="btnApplyFooter" href="#">체험 신청 (15만원)</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // ====== FAQ accordion ======
+    document.querySelectorAll(".faqItem .faqQ").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const item = btn.closest(".faqItem");
+        const open = item.classList.contains("open");
+        document.querySelectorAll(".faqItem.open").forEach((it) => it.classList.remove("open"));
+        if (!open) item.classList.add("open");
+      });
+    });
+
+    // ====== Google Form CTA wiring ======
+    function openForm() {
+      window.open(FORM_URL, "_blank", "noopener");
+    }
+
+    const ids = [
+      "btnRecoTop","btnApplyTop",
+      "btnApplyHero","btnRecoHero",
+      "btnApplyCta","btnRecoCta",
+      "btnApplyFooter"
+    ];
+
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        openForm();
+      });
+    });
+  </script>
+</body>
+</html>
