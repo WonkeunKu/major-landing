@@ -6,11 +6,6 @@
   <title>전공을 입학 전에 체험하세요 | 학과 체험 플랫폼</title>
   <meta name="description" content="수업·과제 기반으로 전공을 미리 경험하고, 학과별 난이도·과제량·팀플·적합도를 비교해보세요. 정가 30만원 → 할인가 15만원." />
 
-  <!-- Google Form URL (단일 관리) -->
-  <script>
-    const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfZKqw6d-evU8WFqyNV7TZ6rk46faFrDj9OuzhdzMwwrSRP_w/viewform?usp=publish-editor";
-  </script>
-
   <style>
     :root{
       --bg:#0b1020;
@@ -673,36 +668,60 @@
   </main>
 
   <script>
-    // ====== FAQ accordion ======
-    document.querySelectorAll(".faqItem .faqQ").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const item = btn.closest(".faqItem");
-        const open = item.classList.contains("open");
-        document.querySelectorAll(".faqItem.open").forEach((it) => it.classList.remove("open"));
-        if (!open) item.classList.add("open");
-      });
+  // ====== FAQ accordion ======
+  document.querySelectorAll(".faqItem .faqQ").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".faqItem");
+      const open = item.classList.contains("open");
+      document.querySelectorAll(".faqItem.open").forEach((it) => it.classList.remove("open"));
+      if (!open) item.classList.add("open");
     });
+  });
 
-    // ====== Google Form CTA wiring ======
-    function openForm() {
-      window.open(FORM_URL, "_blank", "noopener");
-    }
+  // ====== URL 설정 ======
+  const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfZKqw6d-evU8WFqyNV7TZ6rk46faFrDj9OuzhdzMwwrSRP_w/viewform?usp=publish-editor";
+  const RECO_URL = "https://majormbtitest.netlify.app/";
 
-    const ids = [
-      "btnRecoTop","btnApplyTop",
-      "btnApplyHero","btnRecoHero",
-      "btnApplyCta","btnRecoCta",
-      "btnApplyFooter"
-    ];
+  function openForm() {
+    window.open(FORM_URL, "_blank", "noopener");
+  }
 
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.addEventListener("click", (e) => {
-        e.preventDefault();
-        openForm();
-      });
+  function openReco() {
+    window.open(RECO_URL, "_blank", "noopener");
+  }
+
+  // ====== 버튼 연결 ======
+  const applyButtons = [
+    "btnApplyTop",
+    "btnApplyHero",
+    "btnApplyCta",
+    "btnApplyFooter"
+  ];
+
+  const recoButtons = [
+    "btnRecoTop",
+    "btnRecoHero",
+    "btnRecoCta"
+  ];
+
+  applyButtons.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      openForm();
     });
-  </script>
+  });
+
+  recoButtons.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      openReco();
+    });
+  });
+</script>
 </body>
 </html>
+
